@@ -1,16 +1,40 @@
-import json
 from flask import Flask, jsonify, request
+app = Flask(__name__)
 
+list = ["task1", "task2", "task3"]
 
-app=Flask(__name__)
+@app.route('/', methods=['GET', 'POST'])
+def welcome():
+    return "Hello World!"
 
-@app.route("/",methods=["GET"])
-def wellcome():
-    return "Wellcome"
-
-@app.route("/",methods=["GET"])
+@app.route('/main', methods=['GET', 'POST'])
 def main():
-    return "Hello World"
+    return "main page!"
 
-if __name__ =="__main__":
-    app.run(debug=True,host="0.0.0.0",port=8000)
+@app.route('/<int:number>', methods=['GET', 'POST'])
+def pages(number):
+    return f"on page number {number}!"
+
+@app.route('/jsonify', methods=['GET', 'POST'])
+def user_data():
+    return jsonify({'name':'paul', 'age':12})
+
+@app.route('/arguments', methods = ['GET'])
+def get_args():
+    # print(request.args.listvalues())
+    print(request.args.to_dict())
+    return request.args.to_dict()
+
+@app.route('/send_data', methods=['POST'])
+def send_data():
+    data = request.json
+    data['name']
+    return data
+
+# if __name__ == '__main__':
+app.run(host='0.0.0.0', port=105, debug=True)
+
+# welcome page
+# list tasks
+# add task
+# delete
